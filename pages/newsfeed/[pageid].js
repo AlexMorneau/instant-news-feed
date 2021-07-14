@@ -12,6 +12,7 @@ import styles from '../../styles/newsfeed.module.css';
 import router from 'next/router';
 
 const NewsFeed = ({ pageNumber, articles }) => {
+
     const [search, setSearch] = useState('');
 
     const articleListFromSearch = articles.filter(article => {
@@ -82,6 +83,7 @@ const NewsFeed = ({ pageNumber, articles }) => {
 export const getServerSideProps = async pageContext => {
     const pageNumber = pageContext.query.pageid;
 
+    // default newsfeed page properties
     if (!pageNumber || pageNumber < 1 || pageNumber > 10) {
         return {
             props: {
