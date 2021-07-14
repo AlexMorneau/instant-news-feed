@@ -1,9 +1,12 @@
+import styles from './search.module.css';
 
-
-const Search = () => {
+const Search = ({ ...otherProps }) => {
     return (
-        <div>
-            - Searchbar goes here -
+        <div className={styles.SearchContainer}>
+            <input
+                className={styles.SearchBar}
+                placeholder="Search Keyword"
+                { ...otherProps } />
         </div>
     )
 }

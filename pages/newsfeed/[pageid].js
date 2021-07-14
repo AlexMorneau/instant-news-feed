@@ -5,10 +5,26 @@
 import Head from 'next/head';
 import Navbar from '../../components/navbar/navbar';
 import Search from '../../components/search/search';
+import Paginator from '../../components/paginator/paginator';
 import HorizontalScroll from 'react-scroll-horizontal';
+import { useState } from 'react';
 import styles from '../../styles/newsfeed.module.css';
+import router from 'next/router';
 
 const NewsFeed = ({ pageNumber, articles }) => {
+    const [search, setSearch] = useState('');
+
+    const articleListFromSearch = articles.filter(article => {
+        return (
+            article.title.toLowerCase().includes(search.toLowerCase())
+        )
+    });
+
+    const handleSearch = e => {
+        e.preventDefault();
+        setSearch(e.target.value.toLowerCase());
+    }
+
     return (
         <div className="page-container">
             <Head>
@@ -21,13 +37,22 @@ const NewsFeed = ({ pageNumber, articles }) => {
             </Head>
 
             <Navbar />
+            <Search onChange={handleSearch} />
 
 
-            <HorizontalScroll>
+            <HorizontalScroll 
+                reverseScroll={true}
+                config={{stiffness: 50, damping: 18}}>
+
+            
+
             <div className={styles.NewsMain}>
             {
-                articles.map((article, index) => (
-                    <div className={styles.NewsContainer} key={index}>
+                articleListFromSearch.map((article, index) => (
+                    <div 
+                        className={styles.NewsContainer} 
+                        key={index}
+                        onClick={() => window.open(article.url, '_newtab')}>
                         {
                             // display article image if it exists
                             !!article.urlToImage && 
@@ -44,6 +69,10 @@ const NewsFeed = ({ pageNumber, articles }) => {
             }
             </div>
             </HorizontalScroll>
+
+            <Paginator pageNumber={pageNumber} />
+
+
         </div>
 
         
@@ -53,7 +82,7 @@ const NewsFeed = ({ pageNumber, articles }) => {
 export const getServerSideProps = async pageContext => {
     const pageNumber = pageContext.query.pageid;
 
-    if (!pageNumber || pageNumber < 1 || pageNumber > 100) {
+    if (!pageNumber || pageNumber < 1 || pageNumber > 10) {
         return {
             props: {
                 pageNumber: 1,
@@ -63,7 +92,7 @@ export const getServerSideProps = async pageContext => {
     }
 
     // reference: https://newsapi.org/docs/endpoints/top-headlines
-    const res = await fetch(`https://newsapi.org/v2/top-headlines?country=ca&pageSize=100&sortBy=popularity&page=${pageNumber}`,
+    const res = await fetch(`https://newsapi.org/v2/top-headlines?country=ca&pageSize=10&sortBy=popularity&page=${pageNumber}`,
     {
         headers: {
             Authorization: `Bearer ${process.env.NEWS_API_KEY}`

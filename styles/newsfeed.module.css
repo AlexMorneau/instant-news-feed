@@ -21,6 +21,7 @@
     overflow: hidden;
     flex-basis: 100%;
     border: 1px solid rgb(245, 245, 245);
+    cursor: pointer;
 }
 
 .NewsContainer:hover {

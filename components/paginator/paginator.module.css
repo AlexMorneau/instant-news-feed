@@ -1,0 +1,35 @@
+.PaginatorContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.PaginatorCurrentPage {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12;
+    color: rgb(66, 66, 66);
+}
+
+.ArrowEnabled {
+    height: auto;
+    max-width: 30px;
+    opacity: 0.8;
+    cursor: pointer;
+    transition: 200ms ease-in-out;
+    margin: 10px;
+}
+
+.ArrowEnabled:hover {
+    opacity: 1;
+    transition: 500ms ease-in-out;
+}
+
+.ArrowDisabled {
+    height: auto;
+    max-width: 30px;
+    opacity: 0.3;
+    cursor: not-allowed;
+    transition: 200ms ease-in-out;
+    margin: 10px;
+}
