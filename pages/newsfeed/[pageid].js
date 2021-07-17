@@ -17,11 +17,11 @@ const NewsFeed = ({ pageNumber, articles }) => {
 
     console.log(articles);
 
-    const articleListFromSearch = articles.filter(article => {
-        return (
-            article.title.toLowerCase().includes(search.toLowerCase())
-        )
-    });
+    // const articleListFromSearch = articles.filter(article => {
+    //     return (
+    //         article.title.toLowerCase().includes(search.toLowerCase())
+    //     )
+    // });
 
     const handleSearch = e => {
         e.preventDefault();
@@ -40,7 +40,7 @@ const NewsFeed = ({ pageNumber, articles }) => {
             </Head>
 
             <Navbar />
-            <Search onChange={handleSearch} />
+            {/* <Search onChange={handleSearch} /> */}
 
 
             <HorizontalScroll 
@@ -51,7 +51,8 @@ const NewsFeed = ({ pageNumber, articles }) => {
 
             <div className={styles.NewsMain}>
             {
-                articleListFromSearch.map((article, index) => (
+                articles.map((article, index) => (
+                //articleListFromSearch.map((article, index) => (
                     <div 
                         className={styles.NewsContainer} 
                         key={index}
