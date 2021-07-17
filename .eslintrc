@@ -2,7 +2,8 @@
   "extends": ["next", "next/core-web-vitals"],
   "parser": "babel-eslint",
   "rules": {
-    "strict": 0
+    "strict": 0,
+    "@next/next/no-img-element": "off"
   }
 }
 

@@ -60,6 +60,7 @@ const NewsFeed = ({ pageNumber, articles }) => {
                             <img 
                                 className={styles.NewsImage}
                                 src={article.urlToImage}
+                                alt="article-image"
                             />
                         }
                         <h2 className={styles.NewsTitle}>{article.title}</h2>

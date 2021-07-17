@@ -1,12 +1,11 @@
 import router from 'next/router';
-import Image from 'next/image';
 import styles from './paginator.module.css';
 
 const Paginator = ({ pageNumber }) => {
     return (
         <div className={styles.PaginatorContainer}>
         
-            <Image
+            <img
                 className={pageNumber === 1 ? styles.ArrowDisabled : styles.ArrowEnabled}
                 src="/images/arrow_prev.svg" 
                 alt="page-arrow-previous"
@@ -18,7 +17,7 @@ const Paginator = ({ pageNumber }) => {
 
             <div className={styles.PaginatorCurrentPage}> PAGE: ( {pageNumber} )</div>
 
-            <Image
+            <img
                 className={pageNumber === 30 ? styles.ArrowDisabled : styles.ArrowEnabled}
                 src="/images/arrow_next.svg" 
                 alt="page-arrow-next"

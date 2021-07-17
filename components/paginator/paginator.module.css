@@ -13,7 +13,8 @@
 
 .ArrowEnabled {
     height: auto;
-    max-width: 30px;
+    width: 30px;
+    /* max-width: 30px; */
     opacity: 0.8;
     cursor: pointer;
     transition: 200ms ease-in-out;
@@ -27,7 +28,8 @@
 
 .ArrowDisabled {
     height: auto;
-    max-width: 30px;
+    width: 30px;
+    /* max-width: 30px; */
     opacity: 0.3;
     cursor: not-allowed;
     transition: 200ms ease-in-out;
