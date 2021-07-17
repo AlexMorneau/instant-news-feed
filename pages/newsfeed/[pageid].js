@@ -15,6 +15,8 @@ const NewsFeed = ({ pageNumber, articles }) => {
 
     const [search, setSearch] = useState('');
 
+    console.log(articles);
+
     const articleListFromSearch = articles.filter(article => {
         return (
             article.title.toLowerCase().includes(search.toLowerCase())
