@@ -15,8 +15,6 @@ const NewsFeed = ({ pageNumber, articles }) => {
 
     const [search, setSearch] = useState('');
 
-    console.log(`https://newsapi.org/v2/top-headlines?country=ca&pageSize=2&sortBy=popularity&page=${pageNumber}`);
-
     const articleListFromSearch = articles.filter(article => {
         return (
             article.title.toLowerCase().includes(search.toLowerCase())
@@ -83,39 +81,45 @@ const NewsFeed = ({ pageNumber, articles }) => {
     )
 }
 
-export async function getServerSideProps(pageContext) {
-//export const getServerSideProps = async pageContext => {
-    const pageNumber = pageContext.query.pageid;
+// export const getServerSideProps = async pageContext => {
+//     const pageNumber = pageContext.query.pageid;
 
-    // default newsfeed page properties
-    // if (!pageNumber || pageNumber < 1 || pageNumber > 10) {
-    //     return {
-    //         props: {
-    //             pageNumber: 1,
-    //             articles: []
-    //         }
-    //     }
-    // }
+//     // default newsfeed page properties
+//     // if (!pageNumber || pageNumber < 1 || pageNumber > 10) {
+//     //     return {
+//     //         props: {
+//     //             pageNumber: 1,
+//     //             articles: []
+//     //         }
+//     //     }
+//     // }
 
-    console.log("getServerSideProps pre fetch");
+//     // reference: https://newsapi.org/docs/endpoints/top-headlines
+//     const res = await fetch(`https://newsapi.org/v2/top-headlines?country=ca&pageSize=2&sortBy=popularity&page=${pageNumber}`,
+//     {
+//         headers: {
+//             Authorization: `Bearer ${process.env.NEWS_API_KEY}`
+//         }
+//     });
 
-    // reference: https://newsapi.org/docs/endpoints/top-headlines
-    const res = await fetch(`https://newsapi.org/v2/top-headlines?country=ca&pageSize=2&sortBy=popularity&page=${pageNumber}`,
-    {
-        headers: {
-            Authorization: `Bearer ${process.env.NEWS_API_KEY}`
-        }
-    });
+//     const { articles } = await res.json();
 
-    console.log("getServerSideProps pre jsonify");
+//     return {
+//         props: {
+//             pageNumber: Number.parseInt(pageNumber),
+//             articles
+//         }
+//     }
+// }
 
+export const getServerSideProps = async pageContext => {
+    const pageNumber = 1;
+    // const res = await fetch("https://newsapi.org/v2/top-headlines?country=ca&pageSize=2&sortBy=popularity&page=1");
+    const res = await fetch("https://newsapi.org/v2/everything?q=keyword&apiKey=3a601b99164e46ddbb32258e2a1cb97b");
     const { articles } = await res.json();
-
-    console.log(articles);
-
     return {
         props: {
-            pageNumber: Number.parseInt(pageNumber),
+            pageNumber,
             articles
         }
     }
