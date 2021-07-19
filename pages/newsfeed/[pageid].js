@@ -15,7 +15,7 @@ const NewsFeed = ({ pageNumber, articles }) => {
 
     const [search, setSearch] = useState('');
 
-    console.log(articles);
+    console.log(`https://newsapi.org/v2/top-headlines?country=ca&pageSize=2&sortBy=popularity&page=${pageNumber}`);
 
     const articleListFromSearch = articles.filter(article => {
         return (
@@ -83,7 +83,8 @@ const NewsFeed = ({ pageNumber, articles }) => {
     )
 }
 
-export const getServerSideProps = async pageContext => {
+export async function getServerSideProps(pageContext) {
+//export const getServerSideProps = async pageContext => {
     const pageNumber = pageContext.query.pageid;
 
     // default newsfeed page properties
@@ -96,6 +97,8 @@ export const getServerSideProps = async pageContext => {
     //     }
     // }
 
+    console.log("getServerSideProps pre fetch");
+
     // reference: https://newsapi.org/docs/endpoints/top-headlines
     const res = await fetch(`https://newsapi.org/v2/top-headlines?country=ca&pageSize=2&sortBy=popularity&page=${pageNumber}`,
     {
@@ -104,10 +107,11 @@ export const getServerSideProps = async pageContext => {
         }
     });
 
+    console.log("getServerSideProps pre jsonify");
+
     const { articles } = await res.json();
 
-    console.log(`API: https://newsapi.org/v2/top-headlines?country=ca&pageSize=10&sortBy=popularity&page=${pageNumber}`);
-    console.log("articles: " + articles);
+    console.log(articles);
 
     return {
         props: {
