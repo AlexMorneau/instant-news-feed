@@ -81,48 +81,53 @@ const NewsFeed = ({ pageNumber, articles }) => {
     )
 }
 
-// export const getServerSideProps = async pageContext => {
-//     const pageNumber = pageContext.query.pageid;
-
-//     // default newsfeed page properties
-//     // if (!pageNumber || pageNumber < 1 || pageNumber > 10) {
-//     //     return {
-//     //         props: {
-//     //             pageNumber: 1,
-//     //             articles: []
-//     //         }
-//     //     }
-//     // }
-
-//     // reference: https://newsapi.org/docs/endpoints/top-headlines
-//     const res = await fetch(`https://newsapi.org/v2/top-headlines?country=ca&pageSize=2&sortBy=popularity&page=${pageNumber}`,
-//     {
-//         headers: {
-//             Authorization: `Bearer ${process.env.NEWS_API_KEY}`
-//         }
-//     });
-
-//     const { articles } = await res.json();
-
-//     return {
-//         props: {
-//             pageNumber: Number.parseInt(pageNumber),
-//             articles
-//         }
-//     }
-// }
-
 export const getServerSideProps = async pageContext => {
-    const pageNumber = 1;
-    // const res = await fetch("https://newsapi.org/v2/top-headlines?country=ca&pageSize=2&sortBy=popularity&page=1");
-    const res = await fetch("https://newsapi.org/v2/everything?q=keyword&apiKey=3a601b99164e46ddbb32258e2a1cb97b");
+    const pageNumber = pageContext.query.pageid;
+
+    // default newsfeed page properties
+    if (!pageNumber || pageNumber < 1 || pageNumber > 10) {
+        return {
+            props: {
+                pageNumber: 1,
+                articles: []
+            }
+        }
+    }
+
+    // reference: https://newsapi.org/docs/endpoints/top-headlines
+    const res = await fetch(`https://newsapi.org/v2/top-headlines?country=ca&pageSize=2&sortBy=popularity&page=${pageNumber}`,
+    {
+        headers: {
+            Authorization: `Bearer ${process.env.NEWS_API_KEY}`
+        }
+    });
+
     const { articles } = await res.json();
+
     return {
         props: {
-            pageNumber,
+            pageNumber: Number.parseInt(pageNumber),
             articles
         }
     }
 }
+
+// export const getServerSideProps = async pageContext => {
+//     const pageNumber = 1;
+//     // const res = await fetch("https://newsapi.org/v2/top-headlines?country=ca&pageSize=2&sortBy=popularity&page=1");
+//     const res = await fetch("https://newsapi.org/v2/everything?q=keyword",
+//     {
+//         headers: {
+//             Authorization: "3a601b99164e46ddbb32258e2a1cb97b"
+//         }
+//     });
+//     const { articles } = await res.json();
+//     return {
+//         props: {
+//             pageNumber,
+//             articles
+//         }
+//     }
+// }
 
 export default NewsFeed;
