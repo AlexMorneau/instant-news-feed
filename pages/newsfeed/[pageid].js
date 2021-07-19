@@ -97,7 +97,7 @@ export const getServerSideProps = async pageContext => {
     // }
 
     // reference: https://newsapi.org/docs/endpoints/top-headlines
-    const res = await fetch(`https://newsapi.org/v2/top-headlines?country=ca&pageSize=10&sortBy=popularity&page=${pageNumber}`,
+    const res = await fetch(`https://newsapi.org/v2/top-headlines?country=ca&pageSize=2&sortBy=popularity&page=${pageNumber}`,
     {
         headers: {
             Authorization: `Bearer ${process.env.NEWS_API_KEY}`
@@ -106,7 +106,8 @@ export const getServerSideProps = async pageContext => {
 
     const { articles } = await res.json();
 
-    console.log(articles);
+    console.log(`API: https://newsapi.org/v2/top-headlines?country=ca&pageSize=10&sortBy=popularity&page=${pageNumber}`);
+    console.log("articles: " + articles);
 
     return {
         props: {
