@@ -17,11 +17,11 @@ const NewsFeed = ({ pageNumber, articles }) => {
 
     console.log(articles);
 
-    // const articleListFromSearch = articles.filter(article => {
-    //     return (
-    //         article.title.toLowerCase().includes(search.toLowerCase())
-    //     )
-    // });
+    const articleListFromSearch = articles.filter(article => {
+        return (
+            article.title.toLowerCase().includes(search.toLowerCase())
+        )
+    });
 
     const handleSearch = e => {
         e.preventDefault();
@@ -40,7 +40,7 @@ const NewsFeed = ({ pageNumber, articles }) => {
             </Head>
 
             <Navbar />
-            {/* <Search onChange={handleSearch} /> */}
+            <Search onChange={handleSearch} />
 
 
             <HorizontalScroll 
@@ -51,8 +51,7 @@ const NewsFeed = ({ pageNumber, articles }) => {
 
             <div className={styles.NewsMain}>
             {
-                articles.map((article, index) => (
-                //articleListFromSearch.map((article, index) => (
+                articleListFromSearch.map((article, index) => (
                     <div 
                         className={styles.NewsContainer} 
                         key={index}
@@ -88,14 +87,14 @@ export const getServerSideProps = async pageContext => {
     const pageNumber = pageContext.query.pageid;
 
     // default newsfeed page properties
-    if (!pageNumber || pageNumber < 1 || pageNumber > 10) {
-        return {
-            props: {
-                pageNumber: 1,
-                articles: []
-            }
-        }
-    }
+    // if (!pageNumber || pageNumber < 1 || pageNumber > 10) {
+    //     return {
+    //         props: {
+    //             pageNumber: 1,
+    //             articles: []
+    //         }
+    //     }
+    // }
 
     // reference: https://newsapi.org/docs/endpoints/top-headlines
     const res = await fetch(`https://newsapi.org/v2/top-headlines?country=ca&pageSize=10&sortBy=popularity&page=${pageNumber}`,
@@ -106,6 +105,8 @@ export const getServerSideProps = async pageContext => {
     });
 
     const { articles } = await res.json();
+
+    console.log(articles);
 
     return {
         props: {
